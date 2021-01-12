@@ -1,0 +1,15 @@
+{
+    "editor.formatOnType": true,
+    "C_Cpp.clang_format_sortIncludes": true,
+    "files.associations": {
+        "vector": "cpp",
+        "__bit_reference": "cpp",
+        "algorithm": "cpp",
+        "string": "cpp",
+        "__split_buffer": "cpp",
+        "deque": "cpp",
+        "__string": "cpp",
+        "functional": "cpp",
+        "iostream": "cpp"
+    },
+}
