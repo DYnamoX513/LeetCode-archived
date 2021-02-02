@@ -2,6 +2,20 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"type": "shell",
+			"label": "Create build folder",
+			"command":"mkdir",
+			"args": [
+				"-p",
+				"build"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher":[],
+			
+		},
+		{
 			"type": "cppbuild",
 			"label": "C/C++: clang++ build active file",
 			"command": "/usr/bin/clang++",
@@ -24,7 +38,8 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compiler: /usr/bin/clang++"
+			"detail": "compiler: /usr/bin/clang++",
+			"dependsOn":["Create build folder"]
 		},
 		{
 			"type": "cppbuild",
