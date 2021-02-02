@@ -21,14 +21,14 @@ public:
         map<int, vector<int>> sets;
         for (int i = 0; i < length; i++)
         {
-            sets[djs.find(i)].emplace_back(s[i]);
+            sets[djs.findParent(i)].emplace_back(s[i]);
         }
         for(auto &set:sets){
             sort(set.second.begin(), set.second.end(), greater<int>());
         }
         for (int i = 0; i < length; i++)
         {
-            int find = djs.find(i);
+            int find = djs.findParent(i);
             s[i] = sets[find].back();
             sets[find].pop_back();
         }
