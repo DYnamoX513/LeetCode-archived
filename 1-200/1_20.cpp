@@ -9,7 +9,7 @@ struct ListNode
     int val;
     ListNode *next;
     ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
+    explicit ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
@@ -37,9 +37,9 @@ public:
 
     ListNode *addTwoNumbers_2(ListNode *l1, ListNode *l2)
     {
-        ListNode *newList = new ListNode();
+        auto *newList = new ListNode();
         ListNode *pointer = newList;
-        int val1, val2, carry = 0, sum = 0;
+        int val1, val2, carry = 0;
         while (l1 || l2)
         {
             if (l1 != nullptr)
@@ -113,11 +113,44 @@ public:
         }
         return s.substr(position, longest);
     }
+
+    int reverse_7(int x) {
+        /*int sign = x > 0 ? 1 : -1;
+        if (x == 0)
+            return 0;
+        string original = to_string(x);
+        string reversed;
+        int count = (int) original.length() - 1;
+        while (original[count] == '0')
+            count--;
+        while (count >= 0) {
+            reversed += original[count];
+            count--;
+        }
+        try {
+            return stoi(reversed) * sign;
+        } catch (exception &) {
+            return 0;
+        }*/
+
+        // Official Solution (Better)
+        int rev = 0;
+        while (x != 0) {
+            int pop = x % 10;
+            x /= 10;
+            if (rev > INT_MAX / 10 || (rev == INT_MAX / 10 && pop > 7)) return 0;
+            if (rev < INT_MIN / 10 || (rev == INT_MIN / 10 && pop < -8)) return 0;
+            rev = rev * 10 + pop;
+        }
+        return rev;
+    }
 };
 
 int main()
 {
     Solution s;
-    // s.addTwoNumbers_2(new ListNode(2), new ListNode(5, new ListNode(1)));
-    cout << s.longestPalindrome_5("ababa") << endl;
+//    s.addTwoNumbers_2(new ListNode(2), new ListNode(5, new ListNode(1)));
+//    cout << s.longestPalindrome_5("ababa") << endl;
+    cout << s.reverse_7(1534236469) << endl;
+    cout << -123 % 10;
 }

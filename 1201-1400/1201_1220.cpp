@@ -2,6 +2,11 @@
 #include "map"
 #include "string"
 #include "../utils/DisjointSet.h"
+
+#if defined(_WIN32)
+#include "algorithm"
+#endif
+
 using namespace std;
 class Solution
 {
@@ -9,7 +14,7 @@ public:
     string smallestStringWithSwaps_1202(string s, vector<vector<int>> &pairs)
     {
         int length = s.length();
-        if (length < 2 || pairs.size() < 1)
+        if (length < 2 || pairs.empty())
             return s;
         // [1,2] [2,3] => [1,2,3]
         // [1,2] [1,3] => [1,2,3]
@@ -24,7 +29,7 @@ public:
             sets[djs.findParent(i)].emplace_back(s[i]);
         }
         for(auto &set:sets){
-            sort(set.second.begin(), set.second.end(), greater<int>());
+            sort(set.second.begin(), set.second.end(), greater<>());
         }
         for (int i = 0; i < length; i++)
         {

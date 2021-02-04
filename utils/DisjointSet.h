@@ -11,7 +11,7 @@ public:
     // 用于记录并查集的数量,某些情况下该成员非必要
     int count;
 
-    DisjointSet(int n);
+    explicit DisjointSet(int n);
 
     // 路径压缩， 遍历过程中的所有父节点直接指向根节点，
     // 减少后续查找次数
