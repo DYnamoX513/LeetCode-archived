@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
+  <component name="CidrRootsConfiguration">
+    <sourceRoots>
+      <file path="$PROJECT_DIR$/1-200" />
+      <file path="$PROJECT_DIR$/1001-1200" />
+      <file path="$PROJECT_DIR$/1201-1400" />
+      <file path="$PROJECT_DIR$/1401-1600" />
+      <file path="$PROJECT_DIR$/1601-1800" />
+      <file path="$PROJECT_DIR$/201-400" />
+      <file path="$PROJECT_DIR$/401-600" />
+      <file path="$PROJECT_DIR$/601-800" />
+      <file path="$PROJECT_DIR$/801-1000" />
+      <file path="$PROJECT_DIR$/utils" />
+    </sourceRoots>
+    <excludeRoots>
+      <file path="$PROJECT_DIR$/.vscode" />
+      <file path="$PROJECT_DIR$/build" />
+    </excludeRoots>
+  </component>
+</project>
