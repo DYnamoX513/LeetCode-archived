@@ -1,4 +1,5 @@
-#include "map"
+﻿#include "map"
+#include "unordered_map"
 #include "vector"
 #include "string"
 #include "iostream"
@@ -144,6 +145,58 @@ public:
         }
         return rev;
     }
+
+    bool isPalindrome_9(int x) {
+        if (x < 0)
+            return false;
+        long reversed = 0;
+        int original = x;
+        while (original > 0) {
+            reversed *= 10;
+            reversed += original % 10;
+            original /= 10;
+        }
+        return reversed == x;
+
+        //可以只将x反转一半 循环条件为reversed < x
+        //return x == reversed || x == reversed / 10;
+    }
+
+    int romanToInt_13(string s) {
+        /*
+        Symbol       Value
+        I             1
+        V             5
+        X             10
+        L             50
+        C             100
+        D             500
+        M             1000
+        */
+        unordered_map<char, int> symbolToValue(
+                {
+                        pair<char, int>('M', 1000),
+                        pair<char, int>('D', 500),
+                        pair<char, int>('C', 100),
+                        pair<char, int>('L', 50),
+                        pair<char, int>('X', 10),
+                        pair<char, int>('V', 5),
+                        pair<char, int>('I', 1),
+
+                });
+        int length = s.length();
+        int result = 0;
+        for (int i = 0; i < length;) {
+            int current = symbolToValue[s[i]];
+            int next = ++i < length ? symbolToValue[s[i]] : 0;
+            if (current < next) {
+                result -= current;
+            } else {
+                result += current;
+            }
+        }
+        return result;
+    }
 };
 
 int main()
@@ -151,6 +204,7 @@ int main()
     Solution s;
 //    s.addTwoNumbers_2(new ListNode(2), new ListNode(5, new ListNode(1)));
 //    cout << s.longestPalindrome_5("ababa") << endl;
-    cout << s.reverse_7(1534236469) << endl;
+//    cout << s.reverse_7(1534236469) << endl;
     cout << -123 % 10;
+    cout << s.isPalindrome_9(121) << endl;
 }

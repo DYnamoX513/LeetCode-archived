@@ -1,4 +1,4 @@
-#include "iostream"
+﻿#include "iostream"
 #include "map"
 #include "string"
 #include "../utils/DisjointSet.h"
@@ -39,35 +39,30 @@ public:
         }
 
         return s;
-    }    
+    }
+
+    int equalSubstring_1208(string s, string t, int maxCost) {
+        int length = s.length();
+        int maxCount = 0, accumulate = 0;
+        //maxCount为滑动窗口的长度
+        for (int i = 0; i < length; ++i) {
+            if ((accumulate += abs(s[i] - t[i])) <= maxCost) {
+                maxCount++;
+            } else {
+                //移动该窗口直到有更大的窗口出现
+                accumulate -= abs(s[i - maxCount] - t[i - maxCount]);
+            }
+        }
+        return maxCount;
+    }
 };
 
 int main()
 {
     Solution s;
-    vector<vector<int>> pairs;
-    pairs.emplace_back(vector<int>{14,19});
-    pairs.emplace_back(vector<int>{19,8});
-    pairs.emplace_back(vector<int>{22,2});
-    pairs.emplace_back(vector<int>{0,7});
-    pairs.emplace_back(vector<int>{20,22});
-    pairs.emplace_back(vector<int>{11,21});
-    pairs.emplace_back(vector<int>{0,2});
-    pairs.emplace_back(vector<int>{21,9});
-    pairs.emplace_back(vector<int>{18,11});
-    pairs.emplace_back(vector<int>{14,17});
-    pairs.emplace_back(vector<int>{2,11});
-    pairs.emplace_back(vector<int>{19,8});
-    pairs.emplace_back(vector<int>{1,0});
-    pairs.emplace_back(vector<int>{4,16});
-    pairs.emplace_back(vector<int>{15,19});
-    pairs.emplace_back(vector<int>{0,14});
-    pairs.emplace_back(vector<int>{9,16});
-    pairs.emplace_back(vector<int>{9,14});
-    pairs.emplace_back(vector<int>{8,15});
-    pairs.emplace_back(vector<int>{7,6});
-    pairs.emplace_back(vector<int>{11,21});
-    pairs.emplace_back(vector<int>{5,15});
-    //[[6,6],[5,7],[11,4],[0,0],[6,2],[6,7],[0,7],[4,0],[3,1],[2,9],[4,7],[8,6],[9,0]]
-    cout << s.smallestStringWithSwaps_1202("icjkcvebjmuzokbvgusbfgz", pairs) << endl;
+    cout << s.equalSubstring_1208("ujteygggjwxnfl",
+                                  "nstsenrzttikoy",43) << endl;
+
+    cout << s.equalSubstring_1208("abcd",
+                                  "adef",0) << endl;
 }

@@ -1,4 +1,4 @@
-#include "DisjointSet.h"
+﻿#include "DisjointSet.h"
 DisjointSet::DisjointSet(int n) : count(n)
 {
     for (int i = 0; i < n; i++)
