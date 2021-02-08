@@ -3,6 +3,7 @@
 #include "vector"
 #include "string"
 #include "iostream"
+#include "cctype"
 
 using namespace std;
 
@@ -220,6 +221,38 @@ public:
         return rev;
     }
 
+    int myAtoi_8(string s) {
+        long result = 0;
+        int length = s.length();
+        if (length == 0) return result;
+
+        //去掉前面的空格
+        int count = 0;
+        while (count < length && isspace(s[count])) ++count;
+        if (count == length) return result;
+        //判断符号
+        int sign = 1;
+        if (s[count] == '-') {
+            sign = -1;
+            count++;
+        } else if (s[count] == '+')
+            count++;
+        //去掉前面的0
+        while (count < length && s[count] == '0') count++;
+        //大于等于11位时一定溢出
+        int digits = 0;
+        while (count < length && isdigit(s[count]) && digits < 11) {
+            result = result * 10 + (s[count] - '0');
+            digits++;
+            count++;
+        }
+
+        result *= sign;
+        if (result > INT32_MAX) return INT32_MAX;
+        else if (result < INT32_MIN) return INT32_MIN;
+        else return static_cast<int>(result);
+    }
+
     bool isPalindrome_9(int x) {
         if (x < 0)
             return false;
@@ -234,6 +267,92 @@ public:
 
         //可以只将x反转一半 循环条件为reversed < x
         //return x == reversed || x == reversed / 10;
+    }
+
+    //并不好的解法，代码臃肿复杂
+    bool isMatch_10(string s, string p) {
+        //aaa*, aa*a => at least 2 'a'
+        //aa*aaa*a => at least 4 'a'
+        //aa*.*a*a => 从尽可能少地匹配给'.'，剩余部分递归调用 isMatch
+        //a*.???的情况下，aaa???中前三个a任意一个都有可能匹配给'.'
+        int sLength = s.length();
+        int pLength = p.length();
+        int sPointer = 0;
+        int pPointer = 0;
+        while (pPointer < pLength) {
+            int number = 1;
+            bool unlimited = false;
+            char currentChar = p[pPointer];
+            if (currentChar == '.') {
+                if (pPointer + 1 < pLength && p[pPointer + 1] == '*') {
+                    if (pPointer + 2 == pLength) return true;
+                    for (int j = sPointer; j <= sLength; ++j)
+                        if (isMatch_10(s.substr(j), p.substr(pPointer + 2)))
+                            return true;
+                    return false;
+                } else {
+                    if (sPointer == sLength)return false;
+                    sPointer++;
+                    pPointer++;
+                }
+            } else {
+                while (++pPointer < pLength) {
+                    if (p[pPointer] == currentChar)
+                        number++;
+                    else if (p[pPointer] == '*') {
+                        number--;
+                        unlimited = true;
+                    } else if (p[pPointer] != currentChar && unlimited) {
+                        if (p[pPointer] == '.' && pPointer + 1 < pLength && p[pPointer + 1] == '*') {
+                            //将最少要求匹配完 aa*.* == a.*
+                            unlimited = false;
+                            break;
+                        } else {
+                            //从最少要求开始尝试 aa*.
+                            int next = s.find_first_not_of(currentChar, sPointer);
+                            if (next == UINT32_MAX) next = sLength;
+                            for (int j = number + sPointer; j <= next; ++j)
+                                if (isMatch_10(s.substr(j), p.substr(pPointer)))
+                                    return true;
+                            return false;
+                        }
+                    } else break;
+                }
+                //确定数量后，且不存在’.'带来的二义性，进行匹配
+                int next = s.find_first_not_of(currentChar, sPointer);
+                if (next == UINT32_MAX) next = sLength;
+                if (next - sPointer >= number) sPointer = unlimited ? next : sPointer + number;
+                else return false;
+            }
+        }
+        return sPointer == sLength;
+    }
+
+    //第十题动态规划的解法
+    bool isMatch_10DP(string s, string p){
+        int sLength = s.size();
+        int pLength = p.size();
+
+        auto matches = [&](int i, int j) {
+            return i != 0 && (p[j - 1] == '.' || s[i - 1] == p[j - 1]);
+        };
+
+        vector<vector<bool>> dp(sLength + 1, vector<bool>(pLength + 1, false));
+        dp[0][0] = true;
+        for (int i = 0; i <= sLength; ++i) {
+            for (int j = 1; j <= pLength; ++j) {
+                if (p[j - 1] == '*') {
+                    if (matches(i, j - 1))
+                        dp[i][j] = dp[i][j - 2] || dp[i - 1][j];
+                    else
+                        dp[i][j] = dp[i][j - 2];
+                } else {
+                    dp[i][j] = matches(i, j) && dp[i - 1][j - 1];
+                }
+            }
+        }
+
+        return dp[sLength][pLength];
     }
 
     int romanToInt_13(string s) {
@@ -281,7 +400,10 @@ int main() {
 //    cout << s.reverse_7(1534236469) << endl;
 //    cout << s.isPalindrome_9(121) << endl;
 //    cout << s.lengthOfLongestSubstring_3("abba") << endl;
-    vector<int> first({1,2});
-    vector<int> second({3,4});
-    cout<<s.findMedianSortedArrays_4(first,second);
+//    vector<int> first({1,2});
+//    vector<int> second({3,4});
+//    cout<<s.findMedianSortedArrays_4(first,second);
+//    string ss = "aaaa";
+    cout<<s.isMatch_10DP("aaa",
+                         "ab*a*c*a")<<endl;
 }
