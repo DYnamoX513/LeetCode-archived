@@ -355,6 +355,49 @@ public:
         return dp[sLength][pLength];
     }
 
+    int maxArea_11(vector<int>& height) {
+        int length = height.size(), left = 0, right = length - 1, maxSize = 0;
+        while (left<right){
+            int h, w = right - left;
+            if(height[left]>height[right]){
+                h = height[right];
+                right--;
+            } else{
+                h = height[left];
+                left++;
+            }
+            maxSize = max(maxSize, h*w);
+        }
+        return maxSize;
+    }
+
+    vector<pair<int, string>> I2R = {{1000, "M"},
+                                     {900,  "CM"},
+                                     {500,  "D"},
+                                     {400,  "CD"},
+                                     {100,  "C"},
+                                     {90,   "XC"},
+                                     {50,   "L"},
+                                     {40,   "XL"},
+                                     {10,   "X"},
+                                     {9,    "IX"},
+                                     {5,    "V"},
+                                     {4,    "IV"},
+                                     {1,    "I"}};
+
+    string intToRoman_12(int num) {
+        string result;
+        int i = 0;
+        while (num > 0) {
+            if (num >= I2R[i].first) {
+                num -= I2R[i].first;
+                result += I2R[i].second;
+            } else
+                i++;
+        }
+        return result;
+    }
+
     int romanToInt_13(string s) {
         /*
         Symbol       Value
@@ -404,6 +447,8 @@ int main() {
 //    vector<int> second({3,4});
 //    cout<<s.findMedianSortedArrays_4(first,second);
 //    string ss = "aaaa";
-    cout<<s.isMatch_10DP("aaa",
-                         "ab*a*c*a")<<endl;
+//    cout<<s.isMatch_10DP("aaa",
+//                         "ab*a*c*a")<<endl;
+//    vector<int> a({1,8,6,2,5,4,8,3,7});
+//    cout << s.maxArea_11(a) << endl;
 }
