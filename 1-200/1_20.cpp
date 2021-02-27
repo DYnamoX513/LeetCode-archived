@@ -1,5 +1,5 @@
-﻿#include "map"
-#include "unordered_map"
+﻿#include "unordered_map"
+#include "set"
 #include "vector"
 #include "string"
 #include "iostream"
@@ -21,7 +21,7 @@ struct ListNode {
 class Solution {
 public:
     vector<int> twoSum_1(vector<int> &nums, int target) {
-        map<int, int> remainAndIndex;
+        unordered_map<int, int> remainAndIndex;
         int length = nums.size();
         for (int i = 0; i < length; i++) {
             auto iter = remainAndIndex.find(nums[i]);
@@ -434,6 +434,59 @@ public:
         return result;
     }
 
+    vector<vector<int>> threeSum_15(vector<int>& nums) {
+        vector<vector<int>> result;
+        sort(nums.begin(), nums.end());
+        const int length = nums.size();
+        //当前的数不与上一个相同
+        int previous = INT32_MIN;
+        for (int i = 0; i < length - 2 && nums[i] <= 0; ++i) {
+            if (nums[i] == previous) continue;
+            previous = nums[i];
+            int target = -previous;
+            int j = i + 1, k = length - 1;
+            while (j < k) {
+                int twoSum = nums[j] + nums[k];
+                if (twoSum > target) {
+                    k--;    //此处可以与j一样，寻找到下一个不同的nums[k]
+                    continue;
+                } else if (twoSum == target) {
+                    result.emplace_back(vector<int>({nums[i], nums[j], nums[k]}));
+                }
+                //找到和当前不同的下一个nums[j]
+                while (j < k - 1 && nums[j] == nums[j + 1]) j++;
+                j++;
+            }
+        }
+        return result;
+    }
+
+    int threeSumClosest_16(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        const int length = nums.size();
+        int previous = INT32_MIN;
+        int closest, distance = INT32_MAX;
+        for (int i = 0; i < length - 2; ++i) {
+            if (nums[i] == previous) continue;
+            previous = nums[i];
+            int twoTarget = target - previous;
+            int j = i + 1, k = length - 1;
+            while (j < k) {
+                int twoSum = nums[j] + nums[k];
+                if (abs(twoSum-twoTarget) < distance) {
+                    distance = abs(twoSum-twoTarget);
+                    closest = nums[i] + twoSum;
+                }
+                if (twoSum > twoTarget) {
+                    k--;
+                } else if (twoSum < twoTarget) {
+                    j++;
+                } else
+                    return target;
+            }
+        }
+        return closest;
+    }
 };
 
 int main() {
@@ -451,4 +504,6 @@ int main() {
 //                         "ab*a*c*a")<<endl;
 //    vector<int> a({1,8,6,2,5,4,8,3,7});
 //    cout << s.maxArea_11(a) << endl;
+    vector<int> a({-1,2,1,-4,1,2,3,4,5,6,8,7,0,-4,5,32,-123});
+    s.threeSumClosest_16(a,100);
 }
