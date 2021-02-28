@@ -4,6 +4,7 @@
 #include "string"
 #include "iostream"
 #include "cctype"
+#include "algorithm"
 
 using namespace std;
 
@@ -434,6 +435,28 @@ public:
         return result;
     }
 
+    string longestCommonPrefix_14(vector<string>& strs) {
+        int length = strs.size();
+        if (length == 0) return "";
+        else if (length == 1) return strs[0];
+        vector<int> strsLen(length);
+        int minLen = INT32_MAX;
+        for (int i = 0; i < length; ++i) {
+            minLen = min(minLen, strsLen[i] = strs[i].length());
+        }
+        string result;
+        int i = 0;
+        while (i < minLen) {
+            char current = strs[0][i];
+            for (int j = 1; j < length; ++j) {
+                if (strs[j][i] != current) return result;
+            }
+            result += current;
+            i++;
+        }
+        return result;
+    }
+
     vector<vector<int>> threeSum_15(vector<int>& nums) {
         vector<vector<int>> result;
         sort(nums.begin(), nums.end());
@@ -504,6 +527,4 @@ int main() {
 //                         "ab*a*c*a")<<endl;
 //    vector<int> a({1,8,6,2,5,4,8,3,7});
 //    cout << s.maxArea_11(a) << endl;
-    vector<int> a({-1,2,1,-4,1,2,3,4,5,6,8,7,0,-4,5,32,-123});
-    s.threeSumClosest_16(a,100);
 }
