@@ -14,3 +14,5 @@
 > C++ 14  
 > Cmake: (bundle) 3.17.5  
 > Toolchains: Visual Studio(default)/MinGW(g++ gdb)  
+> 取消了未使用的全局变量提示 OCUnusedGlobalDeclaration   
+> 取消了ClangTidyChecks中的 readability-convert-member-functions-to-static  

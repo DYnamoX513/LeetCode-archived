@@ -510,6 +510,89 @@ public:
         }
         return closest;
     }
+
+    //用树的解法更好
+    vector<string> letterCombinations_17(string digits) {
+        int length = digits.length();
+        if (length == 0) return vector<string>();
+
+        const vector<vector<char>> numberToLetter({
+                                                          {},
+                                                          {},
+                                                          {'a', 'b', 'c'},
+                                                          {'d', 'e', 'f'},
+                                                          {'g', 'h', 'i'},
+                                                          {'j', 'k', 'l'},
+                                                          {'m', 'n', 'o'},
+                                                          {'p', 'q', 'r', 's'},
+                                                          {'t', 'u', 'v'},
+                                                          {'w', 'x', 'y', 'z'}
+                                                  });
+        const int counts[]{0, 0, 3, 3, 3, 3, 3, 4, 3, 4};
+
+        vector<int> max(length);
+        vector<int> current(length, 0);
+        vector<vector<char>> letters(length);
+        for (int i = 0; i < length; ++i) {
+            letters[i] = numberToLetter[digits[i] - '0'];
+            max[i] = counts[digits[i] - '0'];
+        }
+        vector<string> result = vector<string>();
+        while (true) {
+            while (current[0] < max[0]) {
+                string s;
+                for (int j = 0; j < length; ++j) {
+                    s += letters[j][current[j]];
+                }
+                result.emplace_back(s);
+                current[0]++;
+            }
+            current[0] = 0;
+            if (length > 1 && current[1] < max[1] - 1) {
+                current[1]++;
+            } else if (length > 2 && current[2] < max[2] - 1) {
+                current[1] = 0;
+                current[2]++;
+            } else if (length > 3 && current[3] < max[3] - 1) {
+                current[1] = 0;
+                current[2] = 0;
+                current[3]++;
+            } else
+                return result;
+        }
+    }
+
+    vector<vector<int>> fourSum_18(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int length = nums.size();
+        int previous1 = INT32_MAX;
+        vector<vector<int>> result;
+
+        int maxNum1 = target / 4;
+        for (int i = 0; i < length - 3 && nums[i] <= maxNum1; ++i) {
+            if (nums[i] == previous1) continue;
+            previous1 = nums[i];
+            int target2 = target - previous1, maxNum2 = target2 / 3, previous2 = INT32_MAX;
+            for (int j = i + 1; j < length - 2 && nums[j] <= maxNum2; ++j) {
+                if (nums[j] == previous2) continue;
+                previous2 = nums[j];
+                int m = j + 1, n = length - 1, target3 = target2 - previous2;
+                while (m < n) {
+                    int sum = nums[m] + nums[n];
+                    if (sum > target3) {
+                        while (m < n && nums[n - 1] == nums[n]) n--;
+                        n--;
+                        continue;
+                    } else if (sum == target3) {
+                        result.emplace_back(vector<int>({previous1, previous2, nums[m], nums[n]}));
+                    }
+                    while (m < n && nums[m] == nums[m + 1]) m++;
+                    m++;
+                }
+            }
+        }
+        return result;
+    }
 };
 
 int main() {
