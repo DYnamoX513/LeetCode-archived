@@ -1,15 +1,11 @@
-﻿#include "iostream"
-#include "vector"
+﻿#include <vector>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int pivotIndex_724(vector<int> &nums)
-    {
+    int pivotIndex_724(vector<int> &nums) {
         int length = nums.size();
-        if (length < 2)
-        {
+        if (length < 2) {
             return 0;
         }
         //起始
@@ -17,14 +13,11 @@ public:
         int rightSum = 0;
         //添加辅助位
         nums.emplace_back(0);
-        for (int i = 1; i < length; i++)
-        {
+        for (int i = 1; i < length; i++) {
             rightSum += nums[i];
         }
-        for (int i = 0; i < length; i++)
-        {
-            if (leftSum == rightSum)
-            {
+        for (int i = 0; i < length; i++) {
+            if (leftSum == rightSum) {
                 return i;
             }
             leftSum += nums[i];
@@ -34,6 +27,5 @@ public:
     }
 };
 
-int main()
-{
+int main() {
 }

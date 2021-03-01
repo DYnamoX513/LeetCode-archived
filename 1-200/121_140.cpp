@@ -1,5 +1,4 @@
-﻿#include "iostream"
-#include "vector"
+﻿#include <vector>
 using namespace std;
 class Solution
 {
@@ -108,5 +107,5 @@ int main()
 {
     Solution s;
     vector<int> test{1, 2};
-    cout << s.maxProfit_123(test) << endl;
+    s.maxProfit_123(test);
 }

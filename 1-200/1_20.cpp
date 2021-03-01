@@ -1,23 +1,12 @@
-﻿#include "unordered_map"
-#include "set"
-#include "vector"
-#include "string"
-#include "iostream"
-#include "cctype"
-#include "algorithm"
-
+﻿#include <unordered_map>
+#include <set>
+#include <vector>
+#include <string>
+#include <cctype>
+#include <algorithm>
+#include <stack>
+#include <ListNode.h>
 using namespace std;
-
-struct ListNode {
-    int val;
-    ListNode *next;
-
-    ListNode() : val(0), next(nullptr) {}
-
-    explicit ListNode(int x) : val(x), next(nullptr) {}
-
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
 
 class Solution {
 public:
@@ -592,6 +581,63 @@ public:
             }
         }
         return result;
+    }
+
+    //空间O(L)
+    ListNode* removeNthFromEnd_19(ListNode* head, int n) {
+        vector<ListNode *> arr;
+        auto ptr = head;
+        while (ptr != nullptr) {
+            arr.push_back(ptr);
+            ptr = ptr->next;
+        }
+        int index = arr.size() - n;
+        if (index == 0) return head->next;
+        arr[index - 1]->next = arr[index]->next;
+        return head;
+    }
+
+    //时间O(L) 空间O(1)
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        vector<ListNode *> arr;
+        auto pre = new ListNode(0, head), ptr1 = head, ptr2 = pre;
+        for (int i = 0; i < n; ++i) {
+            ptr1 = ptr1->next;
+        }
+        while (ptr1 != nullptr) {
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+        }
+
+        ptr2->next = ptr2->next->next;
+        return pre->next;
+    }
+
+    bool isValid_20(string s) {
+        stack<char> st({'#'});
+        int length = s.length(), stSize = 0;
+        if (length % 2 == 1) return false;
+        for (int i = 0; i < length && length - i >= stSize; ++i) {
+            if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+                st.push(s[i]);
+                stSize++;
+            } else {
+                switch (s[i]) {
+                    case '(':
+                        if (st.top() != ')') return false;
+                        break;
+                    case '[':
+                        if (st.top() != ']') return false;
+                        break;
+                    case '{':
+                        if (st.top() != '}') return false;
+                        break;
+                }
+                st.pop();
+                stSize--;
+            }
+        }
+        return stSize == 0;
     }
 };
 

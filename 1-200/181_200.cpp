@@ -1,16 +1,14 @@
-﻿#include "vector"
+﻿#include <vector>
 using namespace std;
-class Solution
-{
+
+class Solution {
 public:
-    int maxProfit_188(int k, vector<int> &prices)
-    {
+    int maxProfit_188(int k, vector<int> &prices) {
         if (k < 1 || prices.size() < 2)
             return 0;
         int length = 2 * k + 1;
         vector<int> dp(length);
-        for (int i = 0; i < k; i++)
-        {
+        for (int i = 0; i < k; i++) {
             dp[2 * i + 1] = -prices[0];
         }
 
@@ -19,10 +17,8 @@ public:
         // 2n-1: keep one stock and have already completed n transaction(s)
         // 2n: have already completed (n+1) transaction(s)
         int priceLength = prices.size();
-        for (int j = 1; j < priceLength; j++)
-        {
-            for (int i = 1; i < length; i++)
-            {
+        for (int j = 1; j < priceLength; j++) {
+            for (int i = 1; i < length; i++) {
                 dp[i] = max(dp[i], dp[i - 1] - prices[j]);
                 i++;
                 dp[i] = max(dp[i], dp[i - 1] + prices[j]);
@@ -31,20 +27,17 @@ public:
         return dp.back();
     }
 
-    void rotate_189(vector<int> &nums, int k)
-    {
+    void rotate_189(vector<int> &nums, int k) {
         int count = 0;
         int length = nums.size();
         if (!k || k == length)
             return;
         int start = -1;
-        while (count != length)
-        {
+        while (count != length) {
             start++;
             int i = start;
             int last = nums[start];
-            do
-            {
+            do {
                 i = (i + k) % length;
                 swap(nums[i], last);
                 count++;

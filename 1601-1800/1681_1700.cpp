@@ -1,17 +1,12 @@
-﻿#include "string"
-#include "iostream"
+﻿#include <string>
 using namespace std;
-class Solution
-{
+class Solution {
 public:
-    int minPartitions_1689(string n)
-    {
+    int minPartitions_1689(string n) {
         char max = '1';
         int length = n.length();
-        for (int i = 0; i < length; i++)
-        {
-            if (n[i] > max)
-            {
+        for (int i = 0; i < length; i++) {
+            if (n[i] > max) {
                 max = n[i];
                 if (max == '9')
                     return 9;
@@ -21,6 +16,5 @@ public:
     }
 };
 
-int main()
-{
+int main() {
 }

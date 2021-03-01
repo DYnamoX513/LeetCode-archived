@@ -1,36 +1,22 @@
-﻿// using namespace std;
-struct TreeNode
-{
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-};
+﻿#include <TreeNode.h>
 
-class Solution
-{
+class Solution {
 public:
-    int deepestLeavesSum_1302(TreeNode *root)
-    {
+    int deepestLeavesSum_1302(TreeNode *root) {
         sum = 0;
         maxDepth = 0;
         search_1302(root, 1);
         return sum;
     }
 
-    void search_1302(TreeNode *node, int depth)
-    {
-        if (node == nullptr)
-        {
+    void search_1302(TreeNode *node, int depth) {
+        if (node == nullptr) {
             return;
         }
-        if (depth > maxDepth)
-        {
+        if (depth > maxDepth) {
             maxDepth = depth;
             sum = node->val;
-        }
-        else if (depth == maxDepth)
-        {
+        } else if (depth == maxDepth) {
             sum += node->val;
         }
 

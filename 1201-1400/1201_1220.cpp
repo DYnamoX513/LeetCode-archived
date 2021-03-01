@@ -1,10 +1,9 @@
-﻿#include "iostream"
-#include "map"
-#include "string"
-#include "../utils/DisjointSet.h"
+﻿#include <map>
+#include <string>
+#include <DisjointSet.h>
 
 #if defined(_WIN32)
-#include "algorithm"
+#include <algorithm>
 #endif
 
 using namespace std;
@@ -60,9 +59,9 @@ public:
 int main()
 {
     Solution s;
-    cout << s.equalSubstring_1208("ujteygggjwxnfl",
-                                  "nstsenrzttikoy",43) << endl;
-
-    cout << s.equalSubstring_1208("abcd",
-                                  "adef",0) << endl;
+//    cout << s.equalSubstring_1208("ujteygggjwxnfl",
+//                                  "nstsenrzttikoy",43) << endl;
+//
+//    cout << s.equalSubstring_1208("abcd",
+//                                  "adef",0) << endl;
 }

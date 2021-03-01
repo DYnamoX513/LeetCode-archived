@@ -1,10 +1,9 @@
 ﻿//
 // Created by 段宇昕 on 2021/2/27.
 //
-#include "vector"
-#include "string"
-#include "unordered_map"
-#include "iostream"
+#include <vector>
+#include <string>
+#include <unordered_map>
 using namespace std;
 class Solution {
 public:
@@ -42,5 +41,5 @@ public:
 
 int main(){
     Solution s;
-    cout<< s.longestSubstring_395("baaabcb",3) <<endl;
+    s.longestSubstring_395("baaabcb",3);
 }

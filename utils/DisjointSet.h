@@ -1,4 +1,7 @@
-﻿#include "vector"
+﻿#ifndef LEETCODE_DISJOINTSET_H
+#define LEETCODE_DISJOINTSET_H
+
+#include "vector"
 using namespace std;
 class DisjointSet
 {
@@ -22,3 +25,5 @@ public:
     // 如果不处于同一个并查集，判断两个root x和root y谁的秩大
     void merge(int x, int y);
 };
+
+#endif
