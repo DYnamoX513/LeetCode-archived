@@ -141,6 +141,50 @@ public:
             h = t = reverseHead;
         }
     }
+
+    int removeDuplicates_26(vector<int>& nums) {
+        int count = 0, length = nums.size(), pre = INT32_MAX;
+        for (int i = 0; i < length; ++i) {
+            if (nums[i] != pre) {
+                pre = nums[i];
+                nums[count] = pre;
+                count++;
+            }
+        }
+        return count;
+    }
+
+    int removeElement_27(vector<int>& nums, int val) {
+        int length = nums.size(), i = 0, j = length - 1;
+        if (length == 0) return 0;
+        while (i <= j) {
+            if (nums[i] == val) {
+                nums[i] = nums[j];
+                j--;
+            } else
+                i++;
+        }
+        return j + 1;
+    }
+
+    int strStr_28(string haystack, string needle) {
+        int nLength = needle.length();
+        if (nLength == 0) return 0;
+        int hLength = haystack.length();
+        if (hLength < nLength) return -1;
+
+        for (int i = 0, j = nLength - 1; j < hLength; ++i, ++j) {
+            bool flag = true;
+            for (int k = 0; k < nLength; ++k) {
+                if (haystack[i + k] != needle[k]) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) return i;
+        }
+        return -1;
+    }
 };
 
 int main(){
