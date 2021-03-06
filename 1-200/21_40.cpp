@@ -185,12 +185,45 @@ public:
         }
         return -1;
     }
+
+    void nextPermutation_31(vector<int>& nums) {
+        int length = nums.size(), index = length - 2;
+        /*vector<int> increase;
+        increase.push_back(nums.back());
+
+        while (index >= 0) {
+            int num = nums[index];
+            if (num >= increase.back())
+                increase.emplace_back(num);
+            else {
+                auto larger = upper_bound(increase.begin(), increase.end(), num);
+                if (larger != increase.end())
+                    swap(*larger, nums[index]);
+                break;
+            }
+            index--;
+        }
+        for (int i : increase)
+            nums[++index] = i;*/
+
+        //不开辟额外的空间
+        while (index >= 0 && nums[index] >= nums[index + 1]) {
+            index--;
+        }
+        if (index >= 0) {
+            auto larger = lower_bound(nums.begin() + index + 1, nums.end(), nums[index], greater<>());
+            swap(*(larger - 1), nums[index]);
+        }
+        reverse(nums.begin() + index, nums.end());
+    }
 };
 
 int main(){
     Solution s;
-    vector<ListNode *> k({new ListNode(1,new ListNode(2)), new ListNode(2,new ListNode(3))});
-    s.mergeKLists_23(k);
+    vector<int> nextP({1,2,3,2});
+    s.nextPermutation_31(nextP);
+//    vector<ListNode *> k({new ListNode(1,new ListNode(2)), new ListNode(2,new ListNode(3))});
+//    s.mergeKLists_23(k);
 //    s.generateParenthesis_22(3);
 }
 
