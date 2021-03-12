@@ -1,10 +1,51 @@
-﻿#include <stack>
+﻿#include <cctype>
+#include <stack>
 #include <string>
 #include <vector>
 using namespace std;
 class Solution
 {
 public:
+    int curr_224 = 0;
+    //递归
+    int calculate_224(const string &s) {
+        int length = s.length(), result = 0, sign = 1;
+        for (; curr_224 < length; ++curr_224) {
+            switch (s[curr_224]) {
+                case '+':
+                    sign = 1;
+                    break;
+                case '-':
+                    sign = -1;
+                    break;
+                case '(':
+                    curr_224++;
+                    result += sign * calculate_224(s);
+                    break;
+                case ' ':
+                    break;
+                case ')':
+                    return result;
+                default: {
+                    int num = 0;
+                    while (curr_224 < length && isdigit(s[curr_224])) {
+                        num *= 10;
+                        num += s[curr_224] - '0';
+                        curr_224++;
+                    }
+                    curr_224--;
+                    result += sign * num;
+                }
+            }
+        }
+        return result;
+    }
+
+    //栈
+    int calculate(string s) {
+
+    }
+
     vector<string> summaryRanges_228(vector<int> &nums) {
         vector<string> result;
         int length = nums.size();
