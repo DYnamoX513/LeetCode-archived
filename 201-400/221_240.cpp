@@ -41,9 +41,44 @@ public:
         return result;
     }
 
-    //栈
-    int calculate(string s) {
 
+    int calculate_227(string s) {
+        int length = s.length(), result = 0, sign = 1, temp = 0, op = 0;
+        for (int i = 0; i < length; ++i) {
+            switch (s[i]) {
+                case '-':
+                    sign = -1;
+                case '+':
+                    result += temp;
+                    break;
+                case '*':
+                    op = 1;
+                    break;
+                case '/':
+                    op = 2;
+                    break;
+                case ' ':
+                    break;
+                default: {
+                    int num = 0;
+                    while (i < length && isdigit(s[i])) {
+                        num *= 10;
+                        num += s[i] - '0';
+                        i++;
+                    }
+                    i--;
+                    if (op == 1)
+                        temp *= num;
+                    else if (op == 2)
+                        temp /= num;
+                    else
+                        temp = sign * num;
+                    op = 0;
+                    sign = 1;
+                }
+            }
+        }
+        return result + temp;
     }
 
     vector<string> summaryRanges_228(vector<int> &nums) {
