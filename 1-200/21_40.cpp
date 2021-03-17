@@ -186,6 +186,27 @@ public:
         return -1;
     }
 
+    int divide_29(int dividend, int divisor) {
+        if (dividend == 0) return 0;
+        if (divisor == 1) return dividend;
+        if (divisor == -1) {
+            if (dividend == INT32_MIN)
+                return INT32_MAX;
+            else
+                return -dividend;
+        }
+        int sign = (dividend ^ divisor) < 0 ? -1 : 1;
+        long remain = abs(static_cast<long>(dividend)), di = abs(static_cast<long>(divisor));
+        int result = 0;
+        for (int i = 30; i >= 0; --i) {
+            if ((di << i) <= remain) {
+                remain -= di << i;
+                result += i << i;
+            }
+        }
+        return sign * result;
+    }
+
     void nextPermutation_31(vector<int>& nums) {
         int length = nums.size(), index = length - 2;
         /*vector<int> increase;
@@ -235,8 +256,9 @@ public:
 
 int main(){
     Solution s;
-    vector<int> nextP({1,2,3,2});
-    s.nextPermutation_31(nextP);
+    s.divide_29(10,3);
+//    vector<int> nextP({1,2,3,2});
+//    s.nextPermutation_31(nextP);
 //    vector<ListNode *> k({new ListNode(1,new ListNode(2)), new ListNode(2,new ListNode(3))});
 //    s.mergeKLists_23(k);
 //    s.generateParenthesis_22(3);
