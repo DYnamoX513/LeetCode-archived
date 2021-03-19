@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <ListNode.h>
 #include <map>
+#include <unordered_map>
 #include <vector>
 #include <stack>
 #include <string>
@@ -207,6 +208,39 @@ public:
         return sign * result;
     }
 
+    vector<int> findSubstring_30(string s, vector<string>& words) {
+        int sLength = s.length(), wLength = words.size(), length = words[0].length();
+        vector<int> result;
+        sLength -= wLength * length;
+        if (sLength < 0) return result;
+        unordered_map<string, int> wordCount;
+        for (const auto &word : words) {
+            auto iter = wordCount.find(word);
+            if (iter == wordCount.end())
+                wordCount[word] = 1;
+            else
+                iter->second++;
+        }
+        vector<int *> w;
+        for (int i = 0; i <= sLength; ++i) {
+            for (int j = 0; j < wLength; ++j) {
+                auto iter = wordCount.find(s.substr(i + length * j, length));
+                if (iter == wordCount.end() || iter->second == 0)
+                    break;
+                else {
+                    w.emplace_back(&(iter->second));
+                    iter->second--;
+                }
+            }
+            int count = w.size();
+            if (count == wLength) result.emplace_back(i);
+            for (int j = 0; j < count; ++j)
+                (*w[j])++;
+            w.clear();
+        }
+        return result;
+    }
+
     void nextPermutation_31(vector<int>& nums) {
         int length = nums.size(), index = length - 2;
         /*vector<int> increase;
@@ -238,6 +272,53 @@ public:
         reverse(nums.begin() + index, nums.end());
     }
 
+    int longestValidParentheses_32(string s) {
+        short length = s.length();
+        if (length < 2) return 0;
+        int result = 0;
+        stack<short> st;
+        st.push(-1);
+        for (short i = 0; i < length; ++i) {
+            if (s[i] == '(')
+                st.push(i);
+            else {
+                st.pop();
+                if (st.empty())
+                    st.push(i);
+                else
+                    result = max(i - st.top(), result);
+            }
+        }
+        return result;
+    }
+
+    //不开辟额外的空间
+    int longestValidParentheses_noExtraSpace(string s) {
+        int length = s.length();
+        if (length < 2) return 0;
+        int result = 0, left = 0, right = 0;
+        for (int i = 0; i < length; ++i) {
+            if (s[i] == '(') left++;
+            else right++;
+            if (right > left) {
+                right = left = 0;
+            } else if (right == left) {
+                result = max(result, right + left);
+            }
+        }
+        right = left = 0;
+        for (int i = length - 1; i >= 0; --i) {
+            if (s[i] == '(') left++;
+            else right++;
+            if (right < left) {
+                right = left = 0;
+            } else if (right == left) {
+                result = max(result, right + left);
+            }
+        }
+        return result;
+    }
+
     int searchInsert_35(vector<int>& nums, int target) {
         //STL一行代码
         return lower_bound(nums.begin(), nums.end(), target) - nums.begin();
@@ -256,7 +337,11 @@ public:
 
 int main(){
     Solution s;
-    s.divide_29(10,3);
+    s.longestValidParentheses_32("(((())()()))()(())");
+//    vector<string> st({"word","good","best","good"});
+//    s.findSubstring_30("wordgoodgoodgoodbestword"
+//                    , st);
+//    s.divide_29(10,3);
 //    vector<int> nextP({1,2,3,2});
 //    s.nextPermutation_31(nextP);
 //    vector<ListNode *> k({new ListNode(1,new ListNode(2)), new ListNode(2,new ListNode(3))});
