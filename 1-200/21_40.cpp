@@ -319,6 +319,77 @@ public:
         return result;
     }
 
+    int search_33(vector<int>& nums, int target) {
+        //find the pivot
+        int length = nums.size(), left = 0, right = length - 1, mid = 0;
+        //ordered (pivot is at 0)
+        if (nums[left] <= nums[right]) mid = right;
+        else {
+            while (left < right) {
+                mid = left + (right - left) / 2;
+                if (nums[left] < nums[mid]) {
+                    left = mid;
+                } else {
+                    right = mid;
+                }
+            }
+        }
+        //[0,mid],[mid+1,n-1]
+        if (target > nums[mid]) return -1;
+        int pos = 0;
+        if (target >= nums[0])
+            left = 0, right = mid;
+        else
+            left = mid + 1, right = length - 1;
+
+        while (left < right) {
+            pos = left + (right - left) / 2;
+            if (nums[pos] < target)
+                left = pos + 1;
+            else
+                right = pos;
+        }
+        return left < length && nums[left] == target ? left : -1;
+    }
+
+    //use STL
+    vector<int> searchRange_34(vector<int>& nums, int target) {
+        vector<int> result({-1, -1});
+        int length = nums.size();
+        if (length == 0) return result;
+        auto firstPos = lower_bound(nums.begin(), nums.end(), target);
+        if (firstPos == nums.end() || *firstPos != target)
+            return result;
+        result[0] = distance(nums.begin(), firstPos);
+        result[1] = distance(nums.begin(), upper_bound(nums.begin(), nums.end(), target)) - 1;
+        return result;
+        //can use equal_range
+    }
+
+    vector<int> searchRange_binarySearch(vector<int> &nums, int target) {
+        vector<int> result({-1, -1});
+        int length = nums.size();
+        if (length == 0) return result;
+        int first = bis(nums, 0, length - 1, target);
+        if (nums[first] != target) return result;
+        result[0] = first;
+        result[1] = first == length - 1 ? first : bis(nums, first + 1, length - 1, target + 1);
+        if (nums[result[1]] != target) result[1]--;
+        return result;
+    }
+
+    int bis(vector<int> &nums, int start, int end, int target) {
+        int mid;
+        while (start < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] < target)
+                start = mid + 1;
+            else
+                end = mid;
+        }
+        return start;
+    }
+
     int searchInsert_35(vector<int>& nums, int target) {
         //STL一行代码
         return lower_bound(nums.begin(), nums.end(), target) - nums.begin();
