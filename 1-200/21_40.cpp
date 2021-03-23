@@ -406,6 +406,23 @@ public:
         return l;*/
     }
 
+    bool isValidSudoku_36(vector<vector<char>>& board) {
+        vector<vector<bool>> row(9, vector<bool>(9, false));
+        vector<vector<bool>> column(9, vector<bool>(9, false));
+        vector<vector<bool>> box(9, vector<bool>(9, false));
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                if (board[i][j] == '.')continue;
+                int num = board[i][j] - '1';
+                int boxNumber = static_cast<int>(i / 3) * 3 + static_cast<int>(j / 3);
+                if (row[i][num] || column[num][j] || box[boxNumber][num])
+                    return false;
+                row[i][num] = column[num][j] = box[boxNumber][num] = true;
+            }
+        }
+        return true;
+    }
+
     string countAndSay_38(int n) {
         if (n == 1) return "1";
         string last = countAndSay_38(n - 1) + "0";

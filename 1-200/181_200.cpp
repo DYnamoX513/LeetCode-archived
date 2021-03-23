@@ -44,4 +44,14 @@ public:
             } while (i != start);
         }
     }
+
+    int hammingWeight_191(uint32_t n) {
+        int result = 0;
+        for (int i = 0; i < 32; ++i) {
+            result += n & 0b1;
+            n >>= 1;
+        }
+        return result;
+        //optimization: n & (n - 1)
+    }
 };

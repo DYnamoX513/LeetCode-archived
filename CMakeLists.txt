@@ -9,6 +9,8 @@ aux_source_directory(utils UtilFiles)
 
 add_executable(0001 1-200/1_20.cpp ${UtilFiles})
 
+add_executable(others ungrouped.cpp ${UtilFiles})
+
 list(APPEND l1 21 41 61 81)
 list(APPEND l20 40 60 80 100)
 foreach(start end IN ZIP_LISTS l1 l20)
