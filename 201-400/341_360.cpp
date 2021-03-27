@@ -5,7 +5,59 @@
 #include <map>
 #include <stack>
 #include <vector>
+#include <iostream>
+
 using namespace std;
+
+
+// This is the interface that allows for creating nested lists.
+// You should not implement it, or speculate about its implementation
+class NestedInteger {
+public:
+    // Return true if this NestedInteger holds a single integer, rather than a nested list.
+    virtual bool isInteger() const = 0;
+
+    // Return the single integer that this NestedInteger holds, if it holds a single integer
+    // The result is undefined if this NestedInteger holds a nested list
+    virtual int getInteger() const = 0;
+
+    // Return the nested list that this NestedInteger holds, if it holds a nested list
+    // The result is undefined if this NestedInteger holds a single integer
+    virtual const vector<NestedInteger> &getList() const = 0;
+};
+
+
+//No.341
+class NestedIterator {
+private:
+    vector<int> li;
+    int i, length;
+
+    void flatten(const vector<NestedInteger> &nestedList) {
+        for (const auto &list : nestedList) {
+            if (list.isInteger())
+                li.emplace_back(list.getInteger());
+            else
+                flatten(list.getList());
+        }
+    }
+
+public:
+    explicit NestedIterator(vector<NestedInteger> &nestedList) {
+        flatten(nestedList);
+        i = 0;
+        length = li.size();
+    }
+
+    int next() {
+        return li[i++];
+    }
+
+    bool hasNext() const {
+        return i < length;
+    }
+};
+
 class Solution {
 public:
     //Bad Solution
@@ -87,8 +139,8 @@ public:
 
 int main() {
     Solution s;
-    vector<vector<int>> a({
-                                  {2,100},{3,200},{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}
-    });
-    s.maxEnvelopes_354(a);
+//    vector<vector<int>> a({
+//                                  {2,100},{3,200},{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}
+//    });
+//    s.maxEnvelopes_354(a);
 }

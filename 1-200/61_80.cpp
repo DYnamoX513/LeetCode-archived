@@ -2,9 +2,29 @@
 // Created by Pochita on 2021/3/21.
 //
 #include <vector>
+#include <ListNode.h>
+
 using namespace std;
 class Solution {
 public:
+    ListNode* rotateRight_61(ListNode* head, int k) {
+        if (head == nullptr || k == 0) return head;
+        int length = 1;
+        auto rear = head;
+        while (rear->next != nullptr) {
+            rear = rear->next;
+            length++;
+        }
+        int position = length - k % length;
+        if (position == length) return head;
+        rear->next = head;
+        for (int i = 0; i < position; ++i)
+            rear = rear->next;
+        auto ret = rear->next;
+        rear->next = nullptr;
+        return ret;
+    }
+
     void setZeroes_73(vector<vector<int>>& matrix) {
         int row = matrix.size(), column = matrix[0].size();
         bool firstRow = false, firstColumn = false;
