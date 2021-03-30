@@ -5,9 +5,10 @@
 #include <ListNode.h>
 
 using namespace std;
+
 class Solution {
 public:
-    ListNode* rotateRight_61(ListNode* head, int k) {
+    ListNode *rotateRight_61(ListNode *head, int k) {
         if (head == nullptr || k == 0) return head;
         int length = 1;
         auto rear = head;
@@ -25,7 +26,7 @@ public:
         return ret;
     }
 
-    void setZeroes_73(vector<vector<int>>& matrix) {
+    void setZeroes_73(vector<vector<int>> &matrix) {
         int row = matrix.size(), column = matrix[0].size();
         bool firstRow = false, firstColumn = false;
         for (int i = 0; i < row; ++i)
@@ -62,4 +63,39 @@ public:
             for (int i = 0; i < row; ++i)
                 matrix[i][0] = 0;
     }
+
+    bool searchMatrix_74(vector<vector<int>> &matrix, int target) {
+        int row = matrix.size(), col = matrix[0].size(), left = 0, right = row - 1, pos = -1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int val = matrix[mid][0];
+            if (val < target) {
+                left = mid + 1;
+                pos = mid;
+            } else if (val > target)
+                right = mid - 1;
+            else
+                return true;
+        }
+        if (pos < 0) return false;
+        left = 0;
+        right = col - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int val = matrix[pos][mid];
+            if (val < target)
+                left = mid + 1;
+            else if (val > target)
+                right = mid - 1;
+            else
+                return true;
+        }
+        return false;
+    }
 };
+
+int main() {
+    Solution s;
+    vector<vector<int>> vec({{1, 3, 5}});
+    s.searchMatrix_74(vec, 4);
+}

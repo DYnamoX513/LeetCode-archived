@@ -45,6 +45,18 @@ public:
         }
     }
 
+    uint32_t reverseBits_190(uint32_t n) {
+        uint32_t result = 0;
+        for (int i = 0; i < 32; ++i) {
+            result <<= 1;
+            if (n & 1) {
+                result += 1;
+            }
+            n >>= 1;
+        }
+        return result;
+    }
+
     int hammingWeight_191(uint32_t n) {
         int result = 0;
         for (int i = 0; i < 32; ++i) {
