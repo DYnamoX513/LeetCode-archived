@@ -1,4 +1,5 @@
-﻿#include <stack>
+﻿#include <unordered_map>
+#include <stack>
 #include <vector>
 using namespace std;
 class Solution{
@@ -25,6 +26,23 @@ public:
         }
 
         return count;
+    }
+
+    int leastBricks_554(vector<vector<int>>& wall) {
+        unordered_map<int, int> rift;
+        for (const auto &row:wall) {
+            int sum = 0;
+            int interval = row.size() - 1;
+            for (int i = 0; i < interval; ++i) {
+                sum += row[i];
+                rift[sum]++;
+            }
+        }
+        int result = 0;
+        for (auto &i : rift)
+            result = max(result, i.second);
+
+        return wall.size() - result;
     }
 };
 

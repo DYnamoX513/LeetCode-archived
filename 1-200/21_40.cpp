@@ -6,6 +6,7 @@
 #include <ListNode.h>
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include <stack>
 #include <string>
@@ -423,6 +424,10 @@ public:
         return true;
     }
 
+    void solveSudoku_37(vector<vector<char>> &board) {
+
+    }
+
     string countAndSay_38(int n) {
         if (n == 1) return "1";
         string last = countAndSay_38(n - 1) + "0";
@@ -481,9 +486,20 @@ public:
 
 int main(){
     Solution s;
-    for (int i = 1; i < 31; ++i) {
-        cout << "\"" + s.countAndSay_38(i) + "\"," << endl;
-    }
+    vector<vector<char>> board = {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                                  {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                                  {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                                  {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                                  {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                                  {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                                  {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                                  {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                                  {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+
+    s.solveSudoku_37(board);
+//    for (int i = 1; i < 31; ++i) {
+//        cout << "\"" + s.countAndSay_38(i) + "\"," << endl;
+//    }
 //    s.longestValidParentheses_32("(((())()()))()(())");
 //    vector<string> st({"word","good","best","good"});
 //    s.findSubstring_30("wordgoodgoodgoodbestword"
