@@ -1,8 +1,10 @@
 ﻿//
 // Created by Pochita on 2021/3/18.
 //
+#include <algorithm>
 #include <ListNode.h>
 #include <stack>
+#include <vector>
 
 using namespace std;
 
@@ -46,6 +48,30 @@ public:
         auto ret = beforeHead->next;
         delete beforeHead;
         return ret;
+    }
+
+    int length_90;
+    vector<vector<int>> result_90;
+    vector<int> current_90;
+
+    vector<vector<int>> subsetsWithDup_90(vector<int> &nums) {
+        sort(nums.begin(), nums.end());
+        length_90 = nums.size();
+        sub_90(nums, 0, false);
+        return result_90;
+    }
+
+    void sub_90(vector<int> &nums, int index, bool choose) {
+        if (index == length_90) {
+            result_90.emplace_back(current_90);
+            return;
+        }
+        sub_90(nums, index + 1, false);
+        if (index > 0 && nums[index] == nums[index - 1] && !choose)
+            return;
+        current_90.emplace_back(nums[index]);
+        sub_90(nums, index + 1, true);
+        current_90.pop_back();
     }
 
     ListNode *reverseBetween_92(ListNode *head, int left, int right) {
