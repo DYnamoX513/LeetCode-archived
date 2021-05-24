@@ -1,10 +1,30 @@
 ﻿//
 // Created by Pochita on 2021/2/7.
 //
+#include <string>
 #include <vector>
 using namespace std;
 class Solution {
 public:
+    int strangePrinter_664(string s) {
+        int length = s.length();
+        vector<vector<int>> dp(length, vector<int>(length));
+        for (int i = length - 1; i >= 0; --i) {
+            dp[i][i] = 1;
+            for (int j = i + 1; j < length; ++j) {
+                if (s[i] == s[j])
+                    dp[i][j] = dp[i][j - 1];
+                else {
+                    int m = INT32_MAX;
+                    for (int k = i; k < j; ++k)
+                        m = min(m, dp[i][k] + dp[k + 1][j]);
+                    dp[i][j] = m;
+                }
+            }
+        }
+        return dp[0][length - 1];
+    }
+
     bool checkPossibility_665(vector<int> &nums) {
         int length = static_cast<int>(nums.size()) - 1;
         bool flag = false;

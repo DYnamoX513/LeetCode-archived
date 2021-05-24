@@ -25,6 +25,8 @@
 				"-g",
 				"${file}",
 				"utils/*.o",
+				"-I",
+				"utils/",
 				"-o",
 				"build/${fileBasenameNoExtension}"
 			],
@@ -43,7 +45,7 @@
 		},
 		{
 			"type": "cppbuild",
-			"label": "C/C++: clang++ compile utils file",
+			"label": "Compile Utils File",
 			"command": "/usr/bin/clang++",
 			"args": [
 				"-std=c++17",

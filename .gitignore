@@ -1,3 +1,4 @@
 build/
 utils/*.o
 cmake-build-debug/
+.DS_Store
