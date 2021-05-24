@@ -424,8 +424,49 @@ public:
         return true;
     }
 
-    void solveSudoku_37(vector<vector<char>> &board) {
+    vector<vector<bool>> box;
+    vector<vector<bool>> row;
+    vector<vector<bool>> col;
 
+    void solveSudoku_37(vector<vector<char>> &board) {
+        box.assign(9, vector<bool>(9, true));
+        row.assign(9, vector<bool>(9, true));
+        col.assign(9, vector<bool>(9, true));
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                int c = board[i][j] - '1';
+                if (c < 0) continue;
+                row[i][c] = col[j][c] = box[(i / 3) * 3 + j / 3][c] = false;
+            }
+        }
+        solver(board, 0, 0);
+    }
+
+    bool solver(vector<vector<char>> &board, int r, int c) {
+        while (r < 9 && board[r][c] != '.') {
+            c++;
+            if (c == 9) {
+                c = 0;
+                r++;
+            }
+        }
+        if (r == 9) return true;
+
+        auto &rr = row[r];
+        auto &cc = col[c];
+        auto &bb = box[(r / 3) * 3 + c / 3];
+
+        for (int i = 0; i < 9; i++) {
+            if (rr[i] && cc[i] && bb[i]) {
+                rr[i] = cc[i] = bb[i] = false;
+                board[r][c] = '1' + i;
+                if (solver(board, r, c)) return true;
+                board[r][c] = '.';
+                rr[i] = cc[i] = bb[i] = true;
+            }
+        }
+
+        return false;
     }
 
     string countAndSay_38(int n) {
