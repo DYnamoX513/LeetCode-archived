@@ -523,11 +523,64 @@ public:
     string countAndSay(int n) {
         return cas[n - 1];
     }
+
+    vector<int> combine;
+    vector<vector<int>> combines;
+    int len;
+    vector<vector<int>> combinationSum_39(vector<int> &candidates, int target) {
+        sort(candidates.begin(), candidates.end(), less());
+        len = candidates.size();
+        combination(candidates, target, 0);
+        return combines;
+    }
+
+    void combination(vector<int> &candidates, int target, int index) {
+        if (target == 0) {
+            combines.emplace_back(combine);
+            return;
+        }
+        if (index >= len) return;
+        int num = candidates[index];
+        int frequency = target / num;
+        combination(candidates, target, index + 1);
+        for (int i = 0; i < frequency; i++) {
+            target -= num;
+            combine.emplace_back(num);
+            combination(candidates, target, index + 1);
+        }
+        for (int i = 0; i < frequency; i++) combine.pop_back();
+    }
+
+    vector<vector<int>> combinationSum2_40(vector<int> &candidates,
+                                           int target) {
+        int length = candidates.size();
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> result;
+        vector<int> current;
+        function<void(int, int)> func = [&](int index, int remain) {
+            if (0 == target) {
+                result.emplace_back(current);
+                return;
+            }
+            if (index >= length || candidates[index] > target) return;
+            for (int i = index; i < length && remain > candidates[i]; i++) {
+                if (i > index && candidates[i] == candidates[i - 1]) continue;
+                current.emplace_back(candidates[i]);
+                func(i + 1, remain - candidates[i]);
+                current.pop_back();
+            }
+        };
+        func(0, target);
+        return result;
+    }
 };
 
 int main(){
     Solution s;
-    vector<vector<char>> board = {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+    vector<int> vec({2, 1, 1});
+    s.combinationSum2_40(vec, 3);
+    /* vector<vector<char>> board = {{'5', '3', '.', '.', '7', '.', '.', '.',
+    '.'},
                                   {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
                                   {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
                                   {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
@@ -535,21 +588,22 @@ int main(){
                                   {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
                                   {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
                                   {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-                                  {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+                                  {'.', '.', '.', '.', '8', '.', '.', '7',
+    '9'}};
 
-    s.solveSudoku_37(board);
-//    for (int i = 1; i < 31; ++i) {
-//        cout << "\"" + s.countAndSay_38(i) + "\"," << endl;
-//    }
-//    s.longestValidParentheses_32("(((())()()))()(())");
-//    vector<string> st({"word","good","best","good"});
-//    s.findSubstring_30("wordgoodgoodgoodbestword"
-//                    , st);
-//    s.divide_29(10,3);
-//    vector<int> nextP({1,2,3,2});
-//    s.nextPermutation_31(nextP);
-//    vector<ListNode *> k({new ListNode(1,new ListNode(2)), new ListNode(2,new ListNode(3))});
-//    s.mergeKLists_23(k);
-//    s.generateParenthesis_22(3);
+    s.solveSudoku_37(board); */
+    //    for (int i = 1; i < 31; ++i) {
+    //        cout << "\"" + s.countAndSay_38(i) + "\"," << endl;
+    //    }
+    //    s.longestValidParentheses_32("(((())()()))()(())");
+    //    vector<string> st({"word","good","best","good"});
+    //    s.findSubstring_30("wordgoodgoodgoodbestword"
+    //                    , st);
+    //    s.divide_29(10,3);
+    //    vector<int> nextP({1,2,3,2});
+    //    s.nextPermutation_31(nextP);
+    //    vector<ListNode *> k({new ListNode(1,new ListNode(2)), new
+    //    ListNode(2,new ListNode(3))}); s.mergeKLists_23(k);
+    //    s.generateParenthesis_22(3);
 }
 

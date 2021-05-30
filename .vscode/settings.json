@@ -23,7 +23,11 @@
         "iterator": "cpp",
         "numeric": "cpp",
         "unordered_set": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "__locale": "cpp"
     },
     "files.encoding": "utf8bom",
+    "cSpell.words": [
+        "Pochita"
+    ],
 }
