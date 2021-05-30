@@ -98,6 +98,8 @@ public:
         }
         return result;
     }
+
+    bool isPowerOfTwo_231(int n) { return n > 0 && !(n & (n - 1)); }
 };
 
 //No.232
