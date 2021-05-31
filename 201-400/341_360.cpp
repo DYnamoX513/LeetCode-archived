@@ -60,6 +60,11 @@ public:
 
 class Solution {
 public:
+    bool isPowerOfFour_342(int n) {
+        return n > 0 && !(n & (n - 1)) &&
+               !(n & (0b10101010101010101010101010101010));
+    }
+
     //Bad Solution
     int maxEnvelopes_354(vector<vector<int>>& envelopes) {
         int length = envelopes.size();
