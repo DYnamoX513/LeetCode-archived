@@ -21,4 +21,21 @@ public:
         }
         return false;
     }
+
+    int findMaxLength_525(vector<int>& nums) {
+        // number of 0 - number of 1
+        unordered_map<int, int> difference;
+        int maxLength = 0, count = 0, length = nums.size();
+        for (int i = 0; i < length; ++i) {
+            count += nums[i];
+            int zeroMinusOne = i - count - count + 1;
+            if (zeroMinusOne == 0)
+                maxLength = i + 1;
+            else if (difference.count(zeroMinusOne))
+                maxLength = max(maxLength, i - difference[zeroMinusOne]);
+            else
+                difference[zeroMinusOne] = i;
+        }
+        return maxLength;
+    }
 };
