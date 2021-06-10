@@ -44,10 +44,21 @@ public:
         }
         return sum == 2 * num;
     }
+
+    int change_518(int amount, vector<int>& coins) {
+        int length = coins.size();
+        vector<int> dp(amount + 1, 0);
+        dp[0] = 1;
+        for (int coin : coins)
+            for (int i = coin; i <= amount; i++) dp[i] += dp[i - coin];
+        return dp.back();
+    }
 };
 
 int main() {
     Solution s;
-    cout << s.checkPerfectNumber_507(28) << endl;
+    // cout << s.checkPerfectNumber_507(28) << endl;
+    vector<int> coins({1, 2, 5});
+    s.change_518(2, coins);
     return 0;
 }
