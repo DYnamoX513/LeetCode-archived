@@ -3,3 +3,7 @@ utils/*.o
 cmake-build-debug/
 .DS_Store
 playground
+/out/
+LeetCode.iml
+LeetCode.ipr
+LeetCode.iws
